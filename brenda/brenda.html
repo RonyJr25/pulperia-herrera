@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> <link rel="manifest" href="/brenda/manifest.json">
+<meta name="theme-color" content="#222222">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulpería Herrera</title>
+<style>
+:root{
+  --negro:#222;
+  --gris:#f2f2f2;
+  --blanco:#fff;
+  --azul:#1565c0;
+  --rojo:#d32f2f;
+}
+body{font-family:sans-serif;margin:0;padding:0;background:var(--gris);color:var(--negro);}
+header{background:var(--negro);color:var(--blanco);padding:12px;font-size:22px;text-align:center;}
+.section{display:none;padding:10px;}
+.active{display:block;}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.btn-main{padding:12px 20px;margin:8px;width:70%;border:none;border-radius:10px;font-size:16px;cursor:pointer;transition: transform 0.1s;}
+.btn-main:hover{transform:scale(1.03);}
+.btn-blue{background:#1565c0;color:#fff;}
+.btn-red{background:#d32f2f;color:#fff;}
+.section-title{font-weight:bold;margin-top:12px;padding:6px 10px;background:#fff;color:var(--negro);border-radius:8px;border:1px solid var(--negro);cursor:pointer;text-align:left;font-size:15px;}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin-top:6px;}
+.product{background:#1565c0;color:#fff;border:none;border-radius:6px;padding:5px;font-size:12px;cursor:pointer;transition:transform 0.1s;}
+.product:hover{transform:scale(1.05);}
+.product.odd{background:#d32f2f;}
+.client-container{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;}
+.client-btn{background:#1565c0;color:#fff;border:none;border-radius:6px;width:75%;text-align:left;padding:6px;cursor:pointer;font-size:14px;margin-bottom:4px;}
+.del-btn{background:#d32f2f;color:#fff;border:none;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;margin-left:5px;}
+.client-panel{display:none;background:#fff;padding:8px;margin:6px 0;border-radius:6px;}
+h2{color:#d32f2f;margin-bottom:10px;text-align:center;}
+h3,h4{color:var(--negro);margin:6px 0;}
+input[type=text]{padding:6px;width:60%;border-radius:6px;border:1px solid #ccc;margin-right:6px;}
+ul{padding-left:20px;margin-top:6px;}
+@media(max-width:600px){
+  .btn-main{width:90%;font-size:14px;padding:10px;}
+  .product-grid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:4px;}
+  .product{font-size:11px;padding:4px;}
+  .section-title{font-size:13px;}
+}
+</style>
+</head>
+<body>
+<header>🍻 Pulpería Herrera</header>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="section active">
+  <div class="center">
+    <h2>👋 Bienvenida</h2>
+    <button class="btn-main btn-blue" onclick="goTo('calculator')">🧮 Calculadora</button>
+    <button class="btn-main btn-red" onclick="goTo('fiados')">📒 Registro de Fiado</button>
+    <p style="margin-top:12px;color:#555;font-size:14px;">Selecciona una opción para comenzar</p>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section id="calculator" class="section">
+  <h2>🧮 Calculadora de Venta</h2>
+  <button class="btn-main btn-blue" onclick="goTo('dashboard')">⬅️ Volver al Menú</button>
+
+  <!-- Secciones de productos -->
+  <div class="section-title" onclick="toggleSection('cervezasCalc')">🍺 Cervezas</div>
+  <div id="cervezasCalc" class="product-grid" style="display:none;">
+    <button class="product" onclick="addCalcProduct(40,'Caguama Salva')">Caguama Salva — L.40</button>
+    <button class="product odd" onclick="addCalcProduct(41,'Caguama Barena')">Caguama Barena — L.41</button>
+    <button class="product" onclick="addCalcProduct(25,'Salvavida')">Salvavida — L.25</button>
+    <button class="product odd" onclick="addCalcProduct(26,'Barena')">Barena — L.26</button>
+    <button class="product" onclick="addCalcProduct(27,'Miller')">Miller — L.27</button>
+    <button class="product odd" onclick="addCalcProduct(27,'Gallo')">Gallo — L.27</button>
+    <button class="product" onclick="addCalcProduct(40,'Ultra')">Ultra — L.40</button>
+    <button class="product odd" onclick="addCalcProduct(40,'Corona')">Corona — L.40</button>
+    <button class="product" onclick="addCalcProduct(35,'Taconuda Salva')">Taconuda Salva — L.35</button>
+    <button class="product odd" onclick="addCalcProduct(36,'Taconuda Barena')">Taconuda Barena — L.36</button>
+    <button class="product" onclick="addCalcProduct(30,'Bud Light')">Bud Light — L.30</button>
+    <button class="product odd" onclick="addCalcProduct(40,'Coors Light')">Coors Light — L.40</button>
+  </div>
+
+  <div class="section-title" onclick="toggleSection('bebidasCalc')">🥤 Bebidas</div>
+  <div id="bebidasCalc" class="product-grid" style="display:none;">
+    <button class="product" onclick="addCalcProduct(35,'Coca 1.1')">Coca 1.1 — L.35</button>
+    <button class="product odd" onclick="addCalcProduct(40,'Coca 1.5')">Coca 1.5 — L.40</button>
+    <button class="product" onclick="addCalcProduct(53,'Coca 2L')">Coca 2L — L.53</button>
+    <button class="product odd" onclick="addCalcProduct(70,'Coca 3L')">Coca 3L — L.70</button>
+    <button class="product" onclick="addCalcProduct(13,'Fresco vidrio')">Fresco vidrio — L.13</button>
+    <button class="product odd" onclick="addCalcProduct(25,'Fresco personal')">Fresco personal — L.25</button>
+    <button class="product" onclick="addCalcProduct(35,'Gatorade')">Gatorade — L.35</button>
+  </div>
+
+  <div class="section-title" onclick="toggleSection('churrosCalc')">🍟 Churros</div>
+  <div id="churrosCalc" class="product-grid" style="display:none;">
+    <button class="product" onclick="addCalcProduct(7,'Doritos')">Doritos — L.7</button>
+    <button class="product odd" onclick="addCalcProduct(7,'Fritos')">Fritos — L.7</button>
+    <button class="product" onclick="addCalcProduct(7,'Yucatecas')">Yucatecas — L.7</button>
+    <button class="product odd" onclick="addCalcProduct(5,'Doraditas')">Doraditas — L.5</button>
+    <button class="product" onclick="addCalcProduct(7,'Chetos')">Chetos — L.7</button>
+    <button class="product odd" onclick="addCalcProduct(10,'Chicharrones')">Chicharrones — L.10</button>
+    <button class="product" onclick="addCalcProduct(10,'Zibas')">Zibas — L.10</button>
+    <button class="product odd" onclick="addCalcProduct(10,'Yum Mix')">Yum Mix — L.10</button>
+    <button class="product" onclick="addCalcProduct(7,'Taqueritos')">Taqueritos — L.7</button>
+    <button class="product odd" onclick="addCalcProduct(7,'Ranchitas')">Ranchitas — L.7</button>
+    <button class="product" onclick="addCalcProduct(5,'Tacos')">Tacos — L.5</button>
+    <button class="product odd" onclick="addCalcProduct(7,'Capy')">Capy — L.7</button>
+    <button class="product" onclick="addCalcProduct(5,'Yuquitas')">Yuquitas — L.5</button>
+    <button class="product odd" onclick="addCalcProduct(5,'Elotitos')">Elotitos — L.5</button>
+    <button class="product" onclick="addCalcProduct(5,'Tajaditas y Chicharrones')">Tajaditas y Chicharrones — L.5</button>
+    <button class="product odd" onclick="addCalcProduct(7,'Rica Sula')">Rica Sula — L.7</button>
+    <button class="product" onclick="addCalcProduct(5,'Nachos y Jalapenos')">Nachos y Jalapenos — L.5</button>
+    <button class="product odd" onclick="addCalcProduct(5,'Tostecas')">Tostecas — L.5</button>
+    <button class="product" onclick="addCalcProduct(16,'Galletas')">Galletas — L.16</button>
+    <button class="product odd" onclick="addCalcProduct(4,'Papasitas')">Papasitas — L.4</button>
+    <button class="product" onclick="addCalcProduct(4,'Quesi Trix')">Quesi Trix — L.4</button>
+    <button class="product odd" onclick="addCalcProduct(4,'Gustito')">Gustito — L.4</button>
+    <button class="product" onclick="addCalcProduct(4,'Pizzas')">Pizzas — L.4</button>
+    <button class="product odd" onclick="addCalcProduct(5,'Anillitos')">Anillitos — L.5</button>
+    <button class="product" onclick="addCalcProduct(5,'Mani')">Mani — L.5</button>
+  </div>
+
+  <div class="section-title" onclick="toggleSection('otrosCalc')">🧰 Otros</div>
+  <div id="otrosCalc" class="product-grid" style="display:none;">
+    <button class="product" onclick="addCalcProduct(24,'Prestobarba')">Prestobarba — L.24</button>
+    <button class="product odd" onclick="addCalcProduct(35,'Encendedor')">Encendedor — L.35</button>
+    <button class="product" onclick="addCalcProduct(10,'Super Blue')">Super Blue — L.10</button>
+    <button class="product odd" onclick="addCalcProduct(20,'Naipe')">Naipe — L.20</button>
+    <button class="product" onclick="addCalcProduct(35,'Pack Cigarros')">Pack Cigarros — L.35</button>
+    <button class="product odd" onclick="addCalcProduct(100,'Pack Doble Click')">Pack Doble Click — L.100</button>
+  </div>
+
+  <div style="margin-top:12px; background:#fff; padding:10px; border-radius:6px;">
+    <h4>Productos seleccionados:</h4>
+    <ul id="calcList"></ul>
+    <h3>Total: L.<span id="totalCalc">0</span></h3>
+    <button class="btn-main btn-red" onclick="resetCalc()">🧹 Limpiar</button>
+  </div>
+</section>
+
+<!-- FIADOS -->
+<section id="fiados" class="section">
+  <h2>📒 Registro de Fiado</h2>
+  <button class="btn-main btn-blue" onclick="goTo('dashboard')">⬅️ Volver al Menú</button>
+  <div style="margin-top:12px;">
+    <input type="text" id="clientName" placeholder="Nombre del cliente">
+    <button class="btn-main btn-red" onclick="addClient()">➕ Agregar Cliente</button>
+  </div>
+  <div id="clientList" style="margin-top:12px;"></div>
+</section>
+
+<script>
+// Navegación
+function goTo(sectionId){
+  document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));
+  document.getElementById(sectionId).classList.add('active');
+}
+function toggleSection(id){
+  const el=document.getElementById(id);
+  el.style.display=(el.style.display==='none')?'grid':'none';
+}
+
+// Calculadora
+let totalCalc = 0;
+let calcProducts = {};
+function addCalcProduct(price,name){
+  if(calcProducts[name]){ calcProducts[name].qty+=1; }
+  else{ calcProducts[name]={price:price, qty:1}; }
+  updateCalcDisplay();
+}
+function updateCalcDisplay(){
+  const listEl=document.getElementById('calcList');
+  listEl.innerHTML='';
+  totalCalc=0;
+  for(const name in calcProducts){
+    const item=calcProducts[name];
+    const li=document.createElement('li');
+    li.innerText=`${item.qty} × ${name} — L.${item.price*item.qty}`;
+    listEl.appendChild(li);
+    totalCalc+=item.price*item.qty;
+  }
+  document.getElementById('totalCalc').innerText=totalCalc;
+}
+function resetCalc(){ totalCalc=0; calcProducts={}; document.getElementById('totalCalc').innerText=0; document.getElementById('calcList').innerHTML=''; }
+
+// FIADOS
+let clients=[];
+window.onload=function(){
+  const saved=localStorage.getItem('clients');
+  if(saved){ clients=JSON.parse(saved); renderClients(); }
+}
+function saveClients(){ localStorage.setItem('clients', JSON.stringify(clients)); }
+function addClient(){
+  const name=document.getElementById('clientName').value.trim();
+  if(!name){ alert('Ingrese un nombre'); return; }
+  if(clients.find(c=>c.name===name)){ alert('Cliente ya agregado'); return; }
+  clients.push({name, products:[], total:0});
+  document.getElementById('clientName').value='';
+  renderClients(); saveClients();
+}
+function renderClients(){
+  const list=document.getElementById('clientList'); list.innerHTML='';
+  const sections=[{
+    name:'Cervezas', items:[
+      {name:'Caguama Salva', price:40},{name:'Caguama Barena', price:41},{name:'Salvavida', price:25},{name:'Barena', price:26},
+      {name:'Miller', price:27},{name:'Gallo', price:27},{name:'Ultra', price:40},{name:'Corona', price:40},
+      {name:'Taconuda Salva', price:35},{name:'Taconuda Barena', price:36},{name:'Bud Light', price:30},{name:'Coors Light', price:40}
+    ]
+  },{
+    name:'Bebidas', items:[
+      {name:'Coca 1.1', price:35},{name:'Coca 1.5', price:40},{name:'Coca 2L', price:53},{name:'Coca 3L', price:70},
+      {name:'Fresco vidrio', price:13},{name:'Fresco personal', price:25},{name:'Gatorade', price:35}
+    ]
+  },{
+    name:'Churros', items:[
+      {name:'Doritos', price:7},{name:'Fritos', price:7},{name:'Yucatecas', price:7},{name:'Doraditas', price:5},
+      {name:'Chetos', price:7},{name:'Chicharrones', price:10},{name:'Zibas', price:10},{name:'Yum Mix', price:10},
+      {name:'Taqueritos', price:7},{name:'Ranchitas', price:7},{name:'Tacos', price:5},{name:'Capy', price:7},
+      {name:'Yuquitas', price:5},{name:'Elotitos', price:5},{name:'Tajaditas y Chicharrones', price:5},{name:'Rica Sula', price:7},
+      {name:'Nachos y Jalapenos', price:5},{name:'Tostecas', price:5},{name:'Galletas', price:16},{name:'Papasitas', price:4},
+      {name:'Quesi Trix', price:4},{name:'Gustito', price:4},{name:'Pizzas', price:4},{name:'Anillitos', price:5},{name:'Mani', price:5}
+    ]
+  },{
+    name:'Otros', items:[
+      {name:'Prestobarba', price:24},{name:'Encendedor', price:35},{name:'Super Blue', price:10},{name:'Naipe', price:20},
+      {name:'Pack Cigarros', price:35},{name:'Pack Doble Click', price:100}
+    ]
+  }];
+
+  clients.forEach((client,index)=>{
+    const div=document.createElement('div'); div.className='client-container';
+    const btn=document.createElement('button'); btn.className='client-btn'; btn.innerText=client.name;
+    btn.onclick=()=>toggleClientPanel(index);
+    const del=document.createElement('button'); del.className='del-btn'; del.innerText='🗑️';
+    del.onclick=()=>{ clients.splice(index,1); renderClients(); saveClients(); }
+
+    div.appendChild(btn); div.appendChild(del);
+
+    const panel=document.createElement('div'); panel.className='client-panel'; panel.id='client-panel-'+index;
+
+    sections.forEach(sec=>{
+      const secTitle=document.createElement('div'); secTitle.className='section-title'; secTitle.innerText=sec.name;
+      secTitle.onclick=()=>{ secGrid.style.display=(secGrid.style.display==='none')?'grid':'none'; }
+      const secGrid=document.createElement('div'); secGrid.className='product-grid'; secGrid.style.display='none';
+      sec.items.forEach(p=>{
+        const pbtn=document.createElement('button'); pbtn.className='product';
+        if(sec.items.indexOf(p)%2) pbtn.classList.add('odd');
+        pbtn.innerText=`${p.name} — L.${p.price}`;
+        pbtn.onclick=()=>{
+          const prodIndex=client.products.findIndex(pr=>pr.name===p.name);
+          if(prodIndex>-1) client.products[prodIndex].qty+=1;
+          else client.products.push({name:p.name, price:p.price, qty:1});
+          client.total=client.products.reduce((sum,pr)=>sum+pr.price*pr.qty,0);
+          renderClients(); saveClients();
+        }
+        secGrid.appendChild(pbtn);
+      });
+      panel.appendChild(secTitle); panel.appendChild(secGrid);
+    });
+
+    const prodList=document.createElement('ul');
+    client.products.forEach(p=>{ const li=document.createElement('li'); li.innerText=`${p.qty} × ${p.name} — L.${p.price*p.qty}`; prodList.appendChild(li); });
+    panel.appendChild(prodList);
+
+    const tot=document.createElement('h4'); tot.innerText='Total: L.'+client.total; panel.appendChild(tot);
+
+    list.appendChild(div); list.appendChild(panel);
+  });
+}
+
+function toggleClientPanel(index){
+  const panel=document.getElementById('client-panel-'+index);
+  panel.style.display=(panel.style.display==='none')?'block':'none';
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/brenda/sw.js')
+  .then(() => console.log('Service Worker registrado'))
+  .catch(err => console.error('Error registrando SW:', err));
+}
+</script>
+
+
+</body>
+</html>
